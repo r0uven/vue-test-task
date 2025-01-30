@@ -1,30 +1,40 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
   <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+    <h1>Создание сущностей в amoCRM</h1>
+    <Dropdown  :options="entities" v-model="selectedEntity"/>
+    <Button :disabled="!isEntitySelected" @click=createEntity>
+      Создать
+    </Button>
+    <ResultArea :results="results"/>
+    </div>
 </template>
 
+
+
+<script setup lang="ts">
+import { ref, computed } from 'vue';
+import { useEntityStore } from './stores/entityStore';
+import Dropdown from './components/Dropdown.vue';
+import Button from './components/Button.vue';
+import ResultArea from './components/ResultArea.vue';
+
+const entities = ['Не выбрано', 'Сделка', 'Контакт', 'Компания'];
+const selectedEntity = ref('Не выбрано');
+const isEntitySelected = computed(() => selectedEntity.value !== "Не выбрано");
+
+const entityStore = useEntityStore();
+const results = entityStore.results;
+
+const createEntity = async () => {
+  if (selectedEntity.value !== 'Не выбрано') {
+    await entityStore.createEntity(selectedEntity.value);
+  }
+}
+
+</script>
+
+
+
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
+
 </style>
