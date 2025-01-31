@@ -1,11 +1,15 @@
 <template>
   <div>
     <h1>Создание сущностей в amoCRM</h1>
-    <Dropdown  :options="entities" v-model="selectedEntity"/>
-    <Loader v-if="isLoading"/>
-    <Button v-else :disabled="!isEntitySelected" @click=createEntity>
-      Создать
-    </Button>
+
+    <div class="choose-select">
+      <Dropdown  :options="entities" v-model="selectedEntity"/>
+      <Loader v-if="isLoading"/>
+      <Button v-else :disabled="!isEntitySelected" @click=createEntity>
+        Создать
+      </Button>
+    </div>
+
     <ResultArea :results="results"/>
     </div>
 </template>
@@ -21,6 +25,11 @@ import ResultArea from './components/ResultArea.vue';
 import Loader from './components/Loader.vue';
 
 const entities = ['Не выбрано', 'Сделка', 'Контакт', 'Компания'];
+const entitiesAmoApi = {
+  Сделка: 'leads',
+  Контакт: 'contacts',
+  Компания: 'companies'
+};
 const selectedEntity = ref('Не выбрано');
 const isEntitySelected = computed(() => selectedEntity.value !== "Не выбрано");
 
@@ -31,19 +40,19 @@ const isLoading = ref(false)
 
 const createEntity = async () => {
   isLoading.value = true;
-  // Симуляция загрузки (например, асинхронный запрос)
-  setTimeout(() => {
-        isLoading.value = false; // Скрываем Loader через 3 секунды
-      }, 3000);
   if (selectedEntity.value !== 'Не выбрано') {
-    await entityStore.createEntity(selectedEntity.value);
+    await entityStore.createEntity(selectedEntity.value, entitiesAmoApi[selectedEntity.value]);
+    isLoading.value = false;
   }
 }
-
 </script>
 
 
 
 <style scoped>
-
+  .choose-select{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 </style>

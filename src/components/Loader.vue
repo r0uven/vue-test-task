@@ -20,18 +20,18 @@
 .lds-ring {
     display: inline-block;
     position: relative;
-    width: 20px;
-    height: 20px;
+    width: 60px;
+    height: 60px;
 }
 
 .lds-ring div {
     box-sizing: border-box;
     display: block;
     position: absolute;
-    width: 20px;
-    height: 20px;
+    width: 40px;
+    height: 40px;
     margin: 8px;
-    border: 2px solid currentColor;
+    border: 3px solid currentColor;
     border-radius: 50%;
     animation: lds-ring 1.2s linear infinite;
     border-color: currentColor transparent transparent transparent;
