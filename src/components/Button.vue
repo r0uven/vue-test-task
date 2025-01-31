@@ -19,6 +19,7 @@ defineProps<{
         border: none;
         border-radius: 5px;
         cursor: pointer;
+        margin-left: 15px;
     }
     button:disabled{
         background-color: #ccc;

@@ -3,7 +3,7 @@
       <h2>Результаты:</h2>
       <ul>
         <li v-for="result in results" :key="result.entityId">
-          {{ result.entityType }}: {{ result.entityId }}
+          {{ result.entityName }} : {{ result.entityId }}
         </li>
       </ul>
     </div>
@@ -11,6 +11,6 @@
   
   <script setup lang="ts">
   defineProps<{
-    results: { entityType: string; entityId: number }[];
+    results: { entityName: string; entityId: number }[];
   }>();
   </script>
